@@ -1,0 +1,40 @@
+@mixin contested-animation($name, $color) {
+    @keyframes #{$name} {
+        0% {
+            border-color: rgba($color, 1.0);
+            box-shadow: 0 0 0.1851vh 0.0925vh rgba(0, 0, 0, 0.22);
+        }
+
+        50% {
+            border-color: rgba($color, 0.0);
+            box-shadow: 0 0 0.1851vh 0.0925vh rgba(0, 0, 0, 0.0);
+        }
+
+        100% {
+            border-color: rgba($color, 1.0);
+            box-shadow: 0 0 0.1851vh 0.0925vh rgba(0, 0, 0, 0.22);
+        }
+    }
+}
+
+@include contested-animation(team-0-contested, $team-0-color);
+@include contested-animation(team-1-contested, $team-1-color);
+@include contested-animation(team-2-contested, $team-2-color);
+
+@keyframes killfeed-hide {
+    0% {
+        opacity: 0.0;
+    }
+
+    2% {
+        opacity: 1.0;
+    }
+
+    94% {
+        opacity: 1.0;
+    }
+
+    100% {
+        opacity: 0.0;
+    }
+}

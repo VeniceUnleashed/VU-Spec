@@ -1,0 +1,40 @@
+.player-controls {
+    font-family: puristasemibold;
+    color: #fff;
+    text-shadow: 0 0 0.555vh rgba(0, 0, 0, 0.60);
+
+    .top-controls {
+        opacity: 0.6;
+        margin-bottom: 0.555vh;
+
+        i {
+            font-size: 1.851vh;
+        }
+
+        span {
+            font-size: 1.481vh;
+            text-transform: uppercase;
+            margin: 0 4.629vh;
+            position: relative;
+            top: -0.0925vh;
+        }
+    }
+
+    .player-names {
+        margin-bottom: 1.481vh;
+
+        .secondary-player {
+            display: inline-block;
+            vertical-align: bottom;
+            opacity: 0.6;
+            font-size: 1.851vh;
+        }
+
+        .spectated-player {
+            display: inline-block;
+            vertical-align: bottom;
+            margin: 0 3.7vh;
+            font-size: 2.222vh;
+        }
+    }
+}

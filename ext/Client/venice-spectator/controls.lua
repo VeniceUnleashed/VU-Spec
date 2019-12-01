@@ -44,7 +44,7 @@ function SpectatorControls:RotateX(p_Transform, p_Vector)
 	)
 end
 
-function SpectatorControls:Update(p_Delta, p_SimDelta)
+function SpectatorControls:OnUpdate(p_Delta, p_SimDelta)
 	self.m_SimTickCount = self.m_SimTickCount + 1
 	self.m_InverseTick = 1.0 / self.m_SimTickCount
 end

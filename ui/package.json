@@ -1,0 +1,56 @@
+{
+  "name": "specui",
+  "version": "1.0.0",
+  "description": "Venice Unleashed Spectator UI",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:OrfeasZ/SpecUI.git"
+  },
+  "license": "ISC",
+  "main": "server.js",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-redux": "^4.0.6",
+    "redux": "^3.0.5",
+    "redux-thunk": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "express": "^4.13.3",
+    "file-loader": "^0.8.5",
+    "json-loader": "^0.5.4",
+    "node-sass": "^3.4.2",
+    "redux-logger": "^2.3.1",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.10",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "webpack --config webpack.config.js"
+  },
+  "private": true,
+  "author": "Orfeas Zafeiris <orfeaz@gmail.com>",
+  "contributors": [
+    {
+      "name": "Orfeas Zafeiris",
+      "email": "orfeaz@gmail.com"
+    },
+    {
+      "name": "Enzo Martin",
+      "email": "enzo.r.martin@gmail.com"
+    }
+  ],
+  "engines": {
+    "node": ">=4.2.0"
+  }
+}
