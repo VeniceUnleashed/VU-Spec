@@ -79,14 +79,13 @@
                         line-height: 1.4814vh;
                         font-size: 1.4814vh;
                         font-family: puristasemibold;
-
-                        i {
-                            float: left;
-                            line-height: 1.8518vh;
-                            font-size: 1.2962vh;
+                        img {
+                            max-width: 20%;
+                            margin: 0.740vh 0;
                         }
 
                         span {
+                            margin: 0.740vh 0;
                             float: right;
                         }
                     }
