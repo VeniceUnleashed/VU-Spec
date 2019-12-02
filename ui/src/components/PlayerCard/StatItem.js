@@ -24,6 +24,7 @@ export default class StatItem extends Component
                 <h1>{label}</h1>
                 <div className="item-container">
                     <i className="fa fa-file-o" />
+                    {/*<img src={require('../../assets/img/weapons/m67.png')}/>*/}
                     <span>{leftLabel + ' / ' + rightLabel}</span>
                 </div>
             </div>

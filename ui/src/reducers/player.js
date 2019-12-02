@@ -63,11 +63,7 @@ export default function player(state = initialState, action)
 
         case CLEAR_PLAYERS:
         {
-            return {
-                players: {},
-                squads: {},
-                playerCount: 0
-            };
+            return initialState;
         }
 
         case SET_PLAYER_COUNT:

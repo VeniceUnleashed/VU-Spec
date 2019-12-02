@@ -670,23 +670,22 @@ function SpectatorUI:GetPlayerData(p_Player)
     local s_Soldier = p_Player.soldier
 
     if s_Soldier ~= nil then
-        --s_PlayerData['currentWeapon'] = s_Soldier:GetCurrentWeaponSlot()
+
         s_PlayerData['health'] = s_Soldier.health
         local s_WeaponsComponent = s_Soldier.weaponsComponent
 
         if s_WeaponsComponent ~= nil then
-            local s_WeaponCount = s_WeaponsComponent.weaponCount
+            s_PlayerData['currentWeapon'] = s_WeaponsComponent.currentWeaponIndex
 
-            for i = 1, s_WeaponCount do
+            for i = 1, s_WeaponsComponent.weaponCount do
+                s_PlayerData['weapons'][i] = {}
+                local s_Weapon = s_WeaponsComponent:GetWeapon(i - 1)
 
-                local s_CurrentWeapon = s_WeaponsComponent:GetWeapon(i - 1)
-
-                if s_CurrentWeapon ~= nil then
-                    s_PlayerData['weapons'][i] = {}
-                    s_PlayerData['weapons'][i]['name'] = SoldierWeaponData(s_CurrentWeapon.data).damageGiverName -- Old: GetWeaponEntityNameByIndex
-                    s_PlayerData['weapons'][i]['displayName'] = s_CurrentWeapon.name -- Old: GetWeaponNameByIndex
-                    s_PlayerData['weapons'][i]['ammo'] = s_CurrentWeapon.primaryAmmo
-                    s_PlayerData['weapons'][i]['ammoMags'] = s_CurrentWeapon.secondaryAmmo
+                if s_Weapon ~= nil then
+                    s_PlayerData['weapons'][i]['name'] = SoldierWeaponData(s_Weapon.data).damageGiverName -- Old: GetWeaponEntityNameByIndex
+                    s_PlayerData['weapons'][i]['displayName'] = s_Weapon.name -- Old: GetWeaponNameByIndex
+                    s_PlayerData['weapons'][i]['ammo'] = s_Weapon.primaryAmmo
+                    s_PlayerData['weapons'][i]['ammoMags'] = s_Weapon.secondaryAmmo
                 end
             end
 
@@ -699,7 +698,6 @@ function SpectatorUI:GetPlayerData(p_Player)
             else
                 s_PlayerData['screen'] = { -9999.0, -9999.0 }
             end]]
-
         end
     end
 
