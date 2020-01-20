@@ -20,6 +20,11 @@ local TOGGLE_PLAYER_SCORE = 18;
 local SET_KILLFEED_KILLS = 19;
 local SET_CURRENT_POSITION = 20;
 
+local SQUAD_COUNT = 32
+local TEAM_COUNT = 2
+local TEAM_CAPACITY = 16
+local SQUAD_CAPACITY = 5 -- TODO: Can now be changed with RCON, handle that.
+
 function SpectatorUI:__init()
     self:RegisterVars()
     self:RegisterEvents()
@@ -43,6 +48,12 @@ function SpectatorUI:RegisterVars()
     self.m_LastPlayer = 0
     self.m_SpectatedPlayer = -1
     self.m_PlayerStats = false
+
+    -- TODO: Make them changeable through RCON or something.
+    self.m_TeamNames = {
+        [1] = 'USMC',
+        [2] = 'RU'
+    }
 end
 
 function SpectatorUI:RegisterEvents()
@@ -104,33 +115,36 @@ function SpectatorUI:OnUpdateInput(p_Delta)
         end
     end
 
+    -- Get first player id of team 2, squad 1.
+    local s_FirstPlayerId = self:GetCustomId(TeamId.Team2, SquadId.Squad1, 0);
+
     if InputManager:WentKeyDown(InputDeviceKeys.IDK_6) then
-        if self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 0) + 1] ~= nil then
-            s_Player = PlayerManager:GetPlayerById(self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 0) + 1]['realId'])
+        if self.m_Players[s_FirstPlayerId] ~= nil then
+            s_Player = PlayerManager:GetPlayerById(self.m_Players[s_FirstPlayerId]['realId'])
         end
     end
 
     if InputManager:WentKeyDown(InputDeviceKeys.IDK_7) then
-        if self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 1) + 1] ~= nil then
-            s_Player = PlayerManager:GetPlayerById(self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 1) + 1]['realId'])
+        if self.m_Players[s_FirstPlayerId + 1] ~= nil then
+            s_Player = PlayerManager:GetPlayerById(self.m_Players[s_FirstPlayerId + 1]['realId'])
         end
     end
 
     if InputManager:WentKeyDown(InputDeviceKeys.IDK_8) then
-        if self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 2) + 1] ~= nil then
-            s_Player = PlayerManager:GetPlayerById(self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 2) + 1]['realId'])
+        if self.m_Players[s_FirstPlayerId + 2] ~= nil then
+            s_Player = PlayerManager:GetPlayerById(self.m_Players[s_FirstPlayerId + 2]['realId'])
         end
     end
 
     if InputManager:WentKeyDown(InputDeviceKeys.IDK_9) then
-        if self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 3) + 1] ~= nil then
-            s_Player = PlayerManager:GetPlayerById(self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 3) + 1]['realId'])
+        if self.m_Players[s_FirstPlayerId + 3] ~= nil then
+            s_Player = PlayerManager:GetPlayerById(self.m_Players[s_FirstPlayerId + 3]['realId'])
         end
     end
 
     if InputManager:WentKeyDown(InputDeviceKeys.IDK_0) then
-        if self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 4) + 1] ~= nil then
-            s_Player = PlayerManager:GetPlayerById(self.m_Players[((2 - 1) * 32 * 5) + (((1 - 1) * 32) + 4) + 1]['realId'])
+        if self.m_Players[s_FirstPlayerId + 4] ~= nil then
+            s_Player = PlayerManager:GetPlayerById(self.m_Players[s_FirstPlayerId + 4]['realId'])
         end
     end
 
@@ -147,8 +161,9 @@ function SpectatorUI:OnUpdateInput(p_Delta)
     local s_PlayerCount = 0
     for _ in pairs(self.m_Players) do s_PlayerCount = s_PlayerCount + 1 end
 
-    for i = 1, ((2 * 32 * 5) + (2 * 16)) do
-        local s_Index = (s_SpectatedPlayer + i) % ((2 * 32 * 5) + (2 * 16))
+    local s_MaxId = ((TEAM_COUNT * SQUAD_COUNT * SQUAD_CAPACITY) + (TEAM_COUNT * TEAM_CAPACITY))
+    for i = 1, s_MaxId do
+        local s_Index = (s_SpectatedPlayer + i) % s_MaxId
         --print(string.format('%d %d -> %d', s_SpectatedPlayer, s_PlayerCount, s_Index))
 
         if self.m_Players[s_Index] ~= nil and self.m_Players[s_Index]['health'] > 0 then
@@ -157,11 +172,11 @@ function SpectatorUI:OnUpdateInput(p_Delta)
         end
     end
 
-    for i = 1, ((2 * 32 * 5) + (2 * 16)) do
+    for i = 1, s_MaxId do
         local s_Index = (s_SpectatedPlayer - i)
 
         if s_Index <= 0 then
-            s_Index = s_Index + ((2 * 32 * 5) + (2 * 16))
+            s_Index = s_Index + s_MaxId
         end
 
         if self.m_Players[s_Index] ~= nil and self.m_Players[s_Index]['health'] > 0 then
@@ -255,8 +270,8 @@ function SpectatorUI:OnTeamCounts(p_Teams)
 
     self:SendUIAction(SET_TEAMS, { teams = s_Teams })
 
-    self:SendUIAction(SET_TEAM_NAME, { team = 1, name = 'FeelsBadMan' })
-    self:SendUIAction(SET_TEAM_NAME, { team = 2, name = 'e-LEMON-ators' })
+    self:SendUIAction(SET_TEAM_NAME, { team = 1, name = self.m_TeamNames[1] })
+    self:SendUIAction(SET_TEAM_NAME, { team = 2, name = self.m_TeamNames[2] })
 end
 
 function SpectatorUI:OnSquadCounts(p_Squads)
@@ -356,9 +371,8 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 
         self:SendUIAction(SET_TEAMS, { teams = s_Teams })
 
-        -- TODO: These are currently hardcoded. Make them configurable.
-        self:SendUIAction(SET_TEAM_NAME, { team = 1, name = 'FeelsBadMan' })
-        self:SendUIAction(SET_TEAM_NAME, { team = 2, name = 'e-LEMON-ators' })
+        self:SendUIAction(SET_TEAM_NAME, { team = 1, name = self.m_TeamNames[1] })
+        self:SendUIAction(SET_TEAM_NAME, { team = 2, name = self.m_TeamNames[2] })
     end
 
     local s_Iterator = EntityManager:GetIterator('CapturePointEntity')
@@ -432,14 +446,17 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
         end
     end
 
-    self.m_TempSquads  = {
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-    }
+
+
+    self.m_TempSquads  = { [1] = {}, [2] = {} }
+    -- Initialize each team's squads.
+    for i = 1, 34 do
+        table.insert(self.m_TempSquads[1], 0)
+        table.insert(self.m_TempSquads[2], 0)
+    end
 
     local s_BatchedUpdate = ''
     local s_HasUpdate = false
-    local s_BatchedUpdates = {}
 
     for i, s_Player in ipairs(PlayerManager:GetPlayers()) do
         if s_Player ~= nil and s_Player.teamId ~= TeamId.TeamNeutral then
@@ -471,8 +488,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
                     player = s_PlayerData
                 }
 
-                local s_Update = s_BatchedUpdate .. string.format('window.store.dispatch(%s);', json.encode(s_Update))
-                s_BatchedUpdate = s_Update
+                s_BatchedUpdate = s_BatchedUpdate .. string.format('window.store.dispatch(%s);', json.encode(s_Update))
                 s_HasUpdate = true
             end
         end
@@ -631,6 +647,15 @@ function SpectatorUI:ShouldUpdatePlayer(p_OldData, p_NewData)
 
     return false
 end
+local s_PlayerId = ((TeamId.Team2 - 1) * SQUAD_COUNT * SQUAD_CAPACITY) + (((SquadId.Squad1 - 1) * SQUAD_COUNT) + 0) + 1
+
+function SpectatorUI:GetCustomId(p_TeamId, p_SquadId, p_SquadPlayerCount)
+    if p_SquadId == SquadId.SquadNone then
+        return (TEAM_COUNT * SQUAD_COUNT * SQUAD_CAPACITY) + ((p_TeamId - 1) * TEAM_CAPACITY + p_SquadPlayerCount) + 1
+    else
+        return ((p_TeamId - 1) * SQUAD_COUNT * SQUAD_CAPACITY) + (((p_SquadId - 1) * SQUAD_CAPACITY) + p_SquadPlayerCount) + 1
+    end
+end
 
 function SpectatorUI:GetPlayerData(p_Player)
     if p_Player == nil then
@@ -639,19 +664,14 @@ function SpectatorUI:GetPlayerData(p_Player)
 
     local s_PlayerData = {}
 
-    local s_SquadCount = 32
-    local s_TeamCount = 2
-    local s_TeamCapacity = 16
-    local s_SquadCapacity = 5
-
-    if p_Player.squadId == 0 then
-        local s_Squad0PlayerCount = self.m_TempSquads[p_Player.teamId][1] - 1
-        s_PlayerData['id'] = (s_TeamCount * s_SquadCount * s_SquadCapacity) + ((p_Player.teamId - 1) * s_TeamCapacity + s_Squad0PlayerCount) + 1
+    local s_SquadPlayerCount
+    if p_Player.squadId == SquadId.SquadNone then
+        s_SquadPlayerCount = self.m_TempSquads[p_Player.teamId][1] - 1
     else
-        local s_SquadPlayerCount = self.m_TempSquads[p_Player.teamId][p_Player.squadId + 1] - 1
-        s_PlayerData['id'] = ((p_Player.teamId - 1) * s_SquadCount * s_SquadCapacity) + (((p_Player.squadId - 1) * s_SquadCapacity) + s_SquadPlayerCount) + 1
+        s_SquadPlayerCount = self.m_TempSquads[p_Player.teamId][p_Player.squadId + 1] - 1
     end
 
+    s_PlayerData['id'] = self:GetCustomId(p_Player.teamId, p_Player.squadId, s_SquadPlayerCount)
     s_PlayerData['realId'] = p_Player.id
     s_PlayerData['name'] = p_Player.name
     s_PlayerData['team'] = p_Player.teamId
