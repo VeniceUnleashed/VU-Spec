@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import App from './containers/App'
-import './assets/scss/screen.scss';
+import '../assets/scss/screen.scss';
 
 // Create the main application store.
 window.store = createStore(reducer);

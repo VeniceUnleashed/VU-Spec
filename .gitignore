@@ -2,6 +2,6 @@
 *.vuic
 ui/build/
 ui/node_modules/
-ui/src/assets/img/
-ui/src/assets/css/
+ui/assets/img/
+ui/assets/css/
 Tools/*

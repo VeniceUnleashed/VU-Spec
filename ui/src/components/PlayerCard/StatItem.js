@@ -23,7 +23,7 @@ export default class StatItem extends Component
             <div className="stat-item">
                 <h1>{label}</h1>
                 <div className="item-container">
-                    <img src={require('../../assets/img/' + label.toLowerCase() +'.png')}/>
+                    <img src={url('../../../assets/img/' + label.toLowerCase() +'.png')}/>
                     <span>{leftLabel + ' / ' + rightLabel}</span>
                 </div>
             </div>

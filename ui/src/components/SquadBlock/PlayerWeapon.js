@@ -28,7 +28,7 @@ export default class PlayerWeapon extends Component
         // TODO: Use frostbite asset.
         return (
             <div className="player-weapon">
-                <img src={require('../../assets/img/weapons/' + weaponName + '.png')} />
+                <img src={url('../../../assets/img/weapons/' + weaponName + '.png')} />
             </div>
         );
     }
