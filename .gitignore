@@ -1,0 +1,7 @@
+.idea/
+*.vuic
+ui/build/
+ui/node_modules/
+ui/assets/img/
+ui/assets/css/
+Tools/*

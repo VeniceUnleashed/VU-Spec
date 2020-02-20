@@ -1,0 +1,158 @@
+.squad-block {
+    padding: 0.92592vh;
+
+    .player {
+        margin-bottom: 0.92592vh;
+        position: relative;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .player-stats {
+            color: #fff;
+            line-height: 1.48148vh;
+            opacity: 0.5;
+
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            h1, h2, h3 {
+                display: inline-block;
+                vertical-align: bottom;
+            }
+
+            h1, h2 {
+                font-size: 1.48148vh;
+                float: left;
+            }
+
+            h1 {
+                width: 2.03703vh;
+                color: $team-0-color;
+                font-size: 1.1111vh;
+                opacity: 0.4;
+            }
+
+            h2 {
+                font-family: puristasemibold;
+                width: 13.8888vh;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                padding-bottom: 0.46296vh;
+            }
+
+            h3 {
+                float: right;
+                font-size: 1.01851vh;
+                opacity: 0.7;
+            }
+        }
+
+        .health-bar {
+            height: 1.48148vh;
+            line-height: 1.1111vh;
+            font-size: 0.92592vh;
+            border-width: 0.0925vh;
+            width: 21.29629vh;
+
+            .bar .percentage {
+                width: 21.29629vh;
+            }
+        }
+
+        .player-weapon {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            opacity: 0.85;
+
+            img {
+                max-height: 100%;
+            }
+        }
+
+        &.active {
+            .player-stats {
+                opacity: 1.0;
+            }
+
+            .health-bar {
+                opacity: 1.0;
+                border-color: $team-0-color;
+            }
+
+            .player-weapon {
+                opacity: 1.0;
+            }
+        }
+
+        &.team-1 {
+            &.active .health-bar {
+                border-color: $team-1-color;
+            }
+
+            .player-weapon {
+                left: 100%;
+
+                img {
+                    transform: scaleX(-1);
+                }
+            }
+        }
+
+        &.team-2 {
+            .health-bar {
+                .bar {
+                    .percentage {
+                        text-align: right;
+                    }
+
+                    &.positive {
+                        left: auto;
+                        right: 0;
+
+                        .percentage {
+                            left: auto;
+                            right: 0;
+                        }
+                    }
+
+                    &.negative {
+                        right: auto;
+                        left: 0;
+
+                        .percentage {
+                            left: 0;
+                            right: auto;
+                        }
+                    }
+                }
+            }
+
+            &.active .health-bar {
+                border-color: $team-2-color;
+            }
+
+            .player-weapon {
+                right: 100%;
+            }
+
+            .player-stats {
+                h1, h2 {
+                    float: right;
+                    text-align: right;
+                }
+
+                h3 {
+                    float: left;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}

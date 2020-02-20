@@ -1,0 +1,135 @@
+.player-card {
+    .info-container {
+        height: auto;
+        width: 64.81vh;
+        margin: 0 auto;
+        padding: 0.74vh;
+        box-sizing: border-box;
+
+        .equipment-container {
+            box-sizing: border-box;
+            width: 49.9%;
+            display: inline-block;
+            vertical-align: top;
+            border-right: 0.185vh solid rgba(255, 255, 255, 0.16);
+
+            .equipment-item {
+                font-size: 1.296vh;
+                font-family: puristaregular;
+                color: #fff;
+                display: inline-block;
+                vertical-align: top;
+                width: 40%;
+                opacity: 0.4;
+
+                &:nth-child(3), &:nth-child(4) {
+                    margin-top: 1.111vh;
+                }
+
+                &.active {
+                    font-family: puristasemibold;
+                    opacity: 1.0;
+                }
+
+                img {
+                    max-width: 100%;
+                    margin: 0.740vh 0;
+                }
+            }
+        }
+
+        .stats-container {
+            width: 49.9%;
+            display: inline-block;
+            vertical-align: top;
+
+            .left-container {
+                padding-left: 0.9259vh;
+                box-sizing: border-box;
+                width: 61.99%;
+                display: inline-block;
+                vertical-align: top;
+
+                .stat-bar {
+                    margin-bottom: 0.555vh;
+                }
+            }
+
+            .right-container {
+                padding-right: 0.9259vh;
+                box-sizing: border-box;
+                width: 37.99%;
+                display: inline-block;
+                vertical-align: top;
+
+                .stat-item {
+                    text-align: left;
+                    color: #e6e6e6;
+                    margin-bottom: 0.4629vh;
+                    margin-left: 0.9259vh;
+
+                    h1 {
+                        text-transform: uppercase;
+                        font-size: 1.2962vh;
+                        margin-bottom: 0.3703vh;
+                    }
+
+                    .item-container {
+                        overflow: hidden;
+                        line-height: 1.4814vh;
+                        font-size: 1.4814vh;
+                        font-family: puristasemibold;
+                        img {
+                            max-width: 20%;
+                            margin: 0.740vh 0;
+                        }
+
+                        span {
+                            margin: 0.740vh 0;
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .score-container {
+        height: 0;
+        width: 64.81vh;
+        margin: 0.370vh auto 0;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+        border-bottom-width: 0;
+        transition: height 250ms ease-in-out, border-bottom-width 250ms ease-in-out;
+
+        .score-item {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0.5555vh 1.3888vh 0.6767vh;
+            color: #e6e6e6;
+
+            h1 {
+                display: inline-block;
+                vertical-align: bottom;
+                font-size: 1.1111vh;
+                margin-right: 0.9259vh;
+                text-transform: uppercase;
+            }
+
+            span {
+                vertical-align: bottom;
+                font-size: 1.48148vh;
+            }
+        }
+    }
+
+    &.show-score {
+        .score-container {
+            height: 2.96296vh;
+            border-bottom-width: 0.277vh;
+        }
+    }
+}

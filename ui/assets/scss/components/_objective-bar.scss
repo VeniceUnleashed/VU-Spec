@@ -1,0 +1,53 @@
+.objective-bar {
+    margin-top: 0.925vh;
+
+    .objective {
+        margin: 0 0.37vh;
+        width: 3.5vh;
+        height: 3.5vh;
+        background: rgba(27, 31, 33, 0.65);
+        display: inline-block;
+
+        .marker {
+            width: 76%;
+            height: 76%;
+            margin: 12%;
+            border: 0.277vh solid $team-0-color;
+            color: $team-0-color;
+            display: block;
+            box-sizing: border-box;
+            line-height: 128%;
+            font-size: 1.47vh;
+            box-shadow: 0 0 0.1851vh 0.0925vh rgba(0, 0, 0, 0.22);
+            text-shadow: 0 0 0.3702vh rgba(0, 0, 0, 0.22);
+        }
+
+        &.team-0 .marker {
+            border-radius: 100%;
+        }
+
+        &.team-1 .marker {
+            color: $team-1-color;
+            border-color: $team-1-color;
+        }
+
+        &.team-2 .marker {
+            color: $team-2-color;
+            border-color: $team-2-color;
+        }
+
+        &.contested {
+            &.team-0 .marker {
+                animation: team-0-contested 0.75s linear infinite alternate;
+            }
+
+            &.team-1 .marker {
+                animation: team-1-contested 0.75s linear infinite alternate;
+            }
+
+            &.team-2 .marker {
+                animation: team-2-contested 0.75s linear infinite alternate;
+            }
+        }
+    }
+}

@@ -1,0 +1,136 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: puristaregular;
+}
+
+.outer-container {
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+
+    &.top-container {
+        position: absolute;
+        top: 0.7vh;
+    }
+
+    &.mid-container {
+        position: absolute;
+        top: 22.5vh;
+    }
+
+    &.bottom-container {
+        position: absolute;
+        bottom: 0.7vh;
+    }
+
+    .inner-container {
+
+        &.left-container {
+            position: absolute;
+            left: 0.7vh;
+        }
+
+        &.center-container {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        &.right-container {
+            position: absolute;
+            right: 0.7vh;
+        }
+    }
+}
+
+.content-container {
+    border: none;
+    background: rgba(27, 31, 33, 0.70);
+
+    &.border-top {
+        border-top: 0.277vh solid $team-0-color;
+    }
+
+    &.border-bottom {
+        border-bottom: 0.277vh solid $team-0-color;
+    }
+
+    &.team-1.border-top, &.team-1.border-bottom {
+        border-color: $team-1-color;
+    }
+
+    &.team-2.border-top, &.team-2.border-bottom {
+        border-color: $team-2-color;
+    }
+}
+
+.progress-bar {
+    position: relative;
+    width: 17.59vh;
+    height: 2.9629vh;
+    line-height: 2.592vh;
+    overflow: hidden;
+    border: 0.185vh solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    font-family: puristasemibold;
+    font-size: 1.481vh;
+    opacity: 0.35;
+
+    &.active {
+        opacity: 1.0;
+    }
+
+    .bar {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        overflow: hidden;
+
+        .percentage {
+            position: absolute;
+            display: block;
+            width: 17.59vh;
+            height: 100%;
+            text-align: left;
+            padding: 0 0.740vh;
+            box-sizing: border-box;
+            border: 0.185vh solid #202426;
+
+            span {
+                vertical-align: top;
+                height: 100%;
+            }
+
+            .right-content {
+                text-align: right;
+                position: absolute;
+                display: inline-flex;
+                align-items: center;
+                align-content: center;
+                right: 0.740vh;
+            }
+        }
+
+        &.positive {
+            background: #c3c4c4;
+            left: 0;
+            width: 0;
+
+            .percentage {
+                left: 0;
+                color: #333;
+            }
+        }
+
+        &.negative {
+            right: 0;
+            width: 100%;
+
+            .percentage {
+                right: 0;
+                color: #c3c4c4;
+            }
+        }
+    }
+}

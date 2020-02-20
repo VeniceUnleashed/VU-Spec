@@ -1,0 +1,35 @@
+.killfeed {
+    margin-top: 0.7vh;
+    margin-right: 0.7vh;
+    text-align: right;
+
+    .kill {
+        font-family: puristasemibold;
+        font-size: 1.666vh;
+        animation: killfeed-hide 5s linear 1 alternate;
+        opacity: 0.0;
+        margin-bottom: 0.18518vh;
+
+        .player-name {
+            color: $team-0-color;
+            text-shadow: 0 0 0.37037vh rgba(0, 0, 0, 0.4);
+
+            &.team-1 {
+                color: $team-1-color;
+                text-shadow: 0 0 0.37037vh rgba($team-1-color, 0.4);
+            }
+
+            &.team-2 {
+                color: $team-2-color;
+                text-shadow: 0 0 0.37037vh rgba($team-2-color, 0.4);
+            }
+        }
+
+        .weapon {
+            text-transform: uppercase;
+            text-shadow: 0 0 0.37037vh rgba(0, 0, 0, 0.4);
+            color: #fff;
+            margin: 0 1.29629vh;
+        }
+    }
+}

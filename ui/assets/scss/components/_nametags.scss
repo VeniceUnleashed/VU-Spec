@@ -1,0 +1,27 @@
+.nametags {
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+
+    .nametag {
+        position: absolute;
+        text-align: center;
+        transform: translate(-50%, -50%);
+        color: $team-0-color;
+        text-shadow: 0 0 0.37037vh rgba(0, 0, 0, 0.4);
+
+        &.team-1 {
+            color: $team-1-color;
+            text-shadow: 0 0 0.37037vh rgba($team-1-color, 0.4);
+        }
+
+        &.team-2 {
+            color: $team-2-color;
+            text-shadow: 0 0 0.37037vh rgba($team-2-color, 0.4);
+        }
+    }
+}

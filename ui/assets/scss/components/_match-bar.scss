@@ -1,0 +1,126 @@
+.match-bar {
+    margin: 0 auto;
+
+    .team-container {
+        height: auto;
+        width: 64.81vh;
+        background: rgba(27, 31, 33, 0.8);
+        color: rgba(230, 230, 230, 1);
+        position: relative;
+        margin: 0 auto;
+        padding-top: 0.277vh;
+        font-family: puristasemibold;
+        overflow: hidden;
+
+        &:before, &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 50%;
+            height: 0.277vh;
+            top: 0;
+        }
+
+        &:before {
+            background: $team-1-color;
+            left: 0;
+        }
+
+        &:after {
+            background: $team-2-color;
+            right: 0;
+        }
+
+        .team-side {
+            width: 42%;
+            height: 3.7vh;
+            margin: 0.462vh 0;
+            text-transform: uppercase;
+            font-size: 1.481vh;
+
+            .team-name, .team-score {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+
+            .team-name {
+                width: 75%;
+            }
+
+            .team-score {
+                width: 25%;
+            }
+
+            &:nth-child(2n+1) {
+                float: left;
+
+                .team-name {
+                    float: left;
+                    border-right: 0.185vh solid rgba(255, 255, 255, 0.1);
+                }
+
+                .team-score {
+                    float: right;
+                }
+            }
+
+            &:nth-child(2n) {
+                float: right;
+
+                .team-name {
+                    float: right;
+                    border-left: 0.185vh solid rgba(255, 255, 255, 0.1);
+                }
+
+                .team-score {
+                    float: left;
+                }
+            }
+        }
+
+        .match-score {
+            width: 16%;
+            height: 3.7vh;
+            margin: 0.462vh 0;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 0.185vh solid rgba(255, 255, 255, 0.3);
+            border-right: 0.185vh solid rgba(255, 255, 255, 0.3);
+            box-sizing: border-box;
+
+            .round-timer {
+                font-size: 1.7vh;
+            }
+
+            .round-counter {
+                font-size: 1.7vh;
+
+                .round-separator {
+                    margin: 0 0.65vh;
+                    color: rgba(230, 230, 230, 0.3);
+                }
+
+                .total-rounds {
+                    color: rgba(230, 230, 230, 0.75);
+                }
+            }
+
+            &.has-rounds.has-timer {
+                .round-timer {
+                    font-size: 1.4vh;
+                }
+
+                .round-counter {
+                    font-size: 1.5vh;
+                }
+            }
+        }
+    }
+
+    @import "objective-bar";
+}
