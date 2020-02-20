@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import App from './containers/App'
 import '../assets/scss/screen.scss';
+// require('file-loader?name=[name].[ext]!../index.html');
 
 // Create the main application store.
 window.store = createStore(reducer);
@@ -21,9 +22,10 @@ render(
 
 // Enable our mock data and spamming scripts when running in dev.
 
-
-if (process.env.NODE_ENV !== 'production')
-{
+// if (process.env.NODE_ENV !== 'production')
+// {
     require('./test/mock');
     require('./test/spam');
-}
+// }
+
+console.log("Test");
