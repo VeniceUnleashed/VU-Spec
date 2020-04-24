@@ -647,7 +647,6 @@ function SpectatorUI:ShouldUpdatePlayer(p_OldData, p_NewData)
 
     return false
 end
-local s_PlayerId = ((TeamId.Team2 - 1) * SQUAD_COUNT * SQUAD_CAPACITY) + (((SquadId.Squad1 - 1) * SQUAD_COUNT) + 0) + 1
 
 function SpectatorUI:GetCustomId(p_TeamId, p_SquadId, p_SquadPlayerCount)
     if p_SquadId == SquadId.SquadNone then
@@ -702,7 +701,9 @@ function SpectatorUI:GetPlayerData(p_Player)
                 local s_Weapon = s_WeaponsComponent:GetWeapon(i - 1)
 
                 if s_Weapon ~= nil then
-                    s_PlayerData['weapons'][i]['name'] = SoldierWeaponData(s_Weapon.data).damageGiverName -- Old: GetWeaponEntityNameByIndex
+                    local s_SoldierWeaponData = SoldierWeaponData(s_Weapon.data)
+                    local s_SoldierWeaponBlueprint = SoldierWeaponBlueprint(s_SoldierWeaponData.soldierWeaponBlueprint)
+                    s_PlayerData['weapons'][i]['name'] = s_SoldierWeaponBlueprint.name or s_Weapon.name -- Old: GetWeaponEntityNameByIndex
                     s_PlayerData['weapons'][i]['displayName'] = s_Weapon.name -- Old: GetWeaponNameByIndex
                     s_PlayerData['weapons'][i]['ammo'] = s_Weapon.primaryAmmo
                     s_PlayerData['weapons'][i]['ammoMags'] = s_Weapon.secondaryAmmo

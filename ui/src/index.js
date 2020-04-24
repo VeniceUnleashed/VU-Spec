@@ -22,10 +22,10 @@ render(
 
 // Enable our mock data and spamming scripts when running in dev.
 
-// if (process.env.NODE_ENV !== 'production')
-// {
+if (process.env.NODE_ENV !== 'production')
+{
     require('./test/mock');
     require('./test/spam');
-// }
+}
 
 console.log("Test");
