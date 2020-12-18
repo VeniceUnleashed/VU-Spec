@@ -8,6 +8,7 @@ export default class TeamSide extends Component
 {
     shouldComponentUpdate(nextProps)
     {
+        if(!this.props || !nextProps) return false
         let team = this.props.team || {};
         let nextTeam = nextProps.team || {};
 

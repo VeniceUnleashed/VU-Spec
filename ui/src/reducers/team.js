@@ -27,6 +27,8 @@ export default function team(state = initialState, action)
 
         case SET_TEAM_NAME:
         {
+            if(!action)
+                return state;
             if (action.team >= state.teams.length)
                 return state;
 

@@ -12,7 +12,7 @@ end
 
 function SpectatorVanillaUI:OnPushScreen(p_Hook, p_Screen, p_GraphPriority, p_ParentGraph)
 	if SpectatorManager:GetCameraMode() == SpectatorCameraMode.Disabled then
-		p_Hook:Next()
+		--p_Hook:Next()
 		return
 	end
 
@@ -28,7 +28,7 @@ function SpectatorVanillaUI:OnPushScreen(p_Hook, p_Screen, p_GraphPriority, p_Pa
 	   s_Screen.name ~= "UI/Flow/Screen/SpawnScreen" and
 	   s_Screen.name ~= "UI/Flow/Screen/SpawnScreenTicketCounterTDMScreen" and
 	   s_Screen.name ~= "UI/Flow/Screen/HudTDMScreen" then
-		p_Hook:Next()
+		--p_Hook:Next()
 		return
    	end
 
