@@ -379,7 +379,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
             local s_Entity = s_TicketIterator:Next()
 
             while s_Entity ~= nil do
-                local s_TicketCounter = LifeCounterEntityData(s_Entity)
+                local s_TicketCounter = LifeCounterEntity(s_Entity)
 
                 if self.m_Tickets[LifeCounterEntityData(s_TicketCounter.data).teamId] ~= s_TicketCounter.lifeCounter then
                     self.m_Tickets[LifeCounterEntityData(s_TicketCounter.data).teamId] = s_TicketCounter.lifeCounter
