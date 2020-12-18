@@ -432,6 +432,11 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 
 		local s_AddObjectives = false
 
+	if s_Entity == nil then
+		-- if we don't find any CapturePointEntity in the beginning we clear our objectives
+		self:SendUIAction(CLEAR_OBJECTIVES, {})
+	end
+	
         while s_Entity ~= nil do
             local s_CaptureEntity = CapturePointEntity(s_Entity)
 
