@@ -14,3 +14,4 @@ Will use this to list some ToDo's/ Issues:
  - there is no support for SQDM
  - the bottom bar with kills, deaths, k/d, accuracy is cut in half in 720p
  - spectator doesn't work with bots
+ - vanilla killfeed should get removed
