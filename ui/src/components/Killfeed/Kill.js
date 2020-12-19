@@ -7,10 +7,12 @@ export default class Kill extends Component
     {
         const { killer, killed, weapon } = this.props;
 
-        let killerClass = killer !== null ? 'player-name killer team-' + killer.team : '';
-        let killerName = killer !== null ? killer.name : '';
+        let killerClass = killer ? 'player-name killer ' : '';
+        killerClass = killer && killer.team ? killerClass + 'team-' + killer.team : killerClass
+        let killerName = killer ? killer.name : '';
 
-        let killedClass = 'player-name killed team-' + killed.team;
+        let killedClass = 'player-name killed ';
+        killedClass = killed && killed.team ? killedClass + 'team-' + killed.team : killedClass;
 
         let weaponParts = weapon.split('/');
         let weaponName = weaponParts[weaponParts.length - 1];
