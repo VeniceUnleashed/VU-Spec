@@ -15,3 +15,4 @@ Will use this to list some ToDo's/ Issues:
  - the bottom bar with kills, deaths, k/d, accuracy is cut in half in 720p
  - spectator doesn't work with bots
  - adjust nade and ammo icon sizes 
+ - improvement: Display the amount of spectators for the spectated player
