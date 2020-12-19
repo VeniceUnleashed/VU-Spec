@@ -3,7 +3,7 @@ VU mod offering standard spectator functionality
 
 Will use this to list some ToDo's/ Issues:
 
- - UI disappears sometimes when a player dies, or gets killed i.e out of bounds death. (if inflictor == nil then we get this error)
+ - UI disappears sometimes when a player dies, or gets killed i.e out of bounds death.
  - shows Assault Rifle instead of m320/m26 in gadget slot.
  - primaryAmmo and secondaryAmmo doesnt work in Vext for other players then the client <a href="https://github.com/EmulatorNexus/VeniceUnleashed/issues/459">see here</a>
  - accuracy is always 100% because not implemented
