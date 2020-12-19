@@ -4,6 +4,7 @@ function SpectatorVanillaUI:__init()
 	-- Install our hooks.
 	-- TODO: Re-enable push screen hook when our UI is ready.
 	self.m_UIPushScreenHook = Hooks:Install('UI:PushScreen', 420, self, self.OnPushScreen)
+	self.m_UICreateKillMessageHook = Hooks:Install('UI:CreateKillMessage', 420, self, self.OnCreateKillMessage)
 end
 
 function SpectatorVanillaUI:OnUpdate(p_Delta, p_SimDelta)
@@ -71,6 +72,11 @@ function SpectatorVanillaUI:OnPushScreen(p_Hook, p_Screen, p_GraphPriority, p_Pa
 
 	-- Pass the modified screen to the original function.
 	p_Hook:Pass(s_Screen, p_GraphPriority, p_ParentGraph)
+end
+
+function SpectatorVanillaUI:OnPushScreen(p_Hook)
+	-- Block the kill feed
+	p_Hook:Return()
 end
 
 return SpectatorVanillaUI
