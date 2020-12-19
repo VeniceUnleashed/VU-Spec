@@ -74,7 +74,7 @@ function SpectatorVanillaUI:OnPushScreen(p_Hook, p_Screen, p_GraphPriority, p_Pa
 	p_Hook:Pass(s_Screen, p_GraphPriority, p_ParentGraph)
 end
 
-function SpectatorVanillaUI:OnPushScreen(p_Hook)
+function SpectatorVanillaUI:OnCreateKillMessage(p_Hook)
 	-- Block the kill feed
 	p_Hook:Return()
 end
