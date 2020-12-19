@@ -75,6 +75,9 @@ function SpectatorVanillaUI:OnPushScreen(p_Hook, p_Screen, p_GraphPriority, p_Pa
 end
 
 function SpectatorVanillaUI:OnCreateKillMessage(p_Hook)
+	if SpectatorManager:GetCameraMode() == SpectatorCameraMode.Disabled then
+		return
+	end
 	-- Block the kill feed
 	p_Hook:Return()
 end
