@@ -83,16 +83,23 @@
                         font-family: puristasemibold;
 
                         .img-container {
+                            $vh-sz: 2vh;
+                            $px-sz: 16px;
+
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            max-width: 20%;
+                            width: $vh-sz;
+                            min-width: $px-sz;
+                            height: $vh-sz;
+                            min-height: $px-sz;
                             margin: 0.740vh 0;
                             overflow: hidden;
 
                             img {
+                                width: 100%;
                                 display: block;
-                                transform: scale(2);
+                                transform: scale(4);
                             }
                         }
                         
