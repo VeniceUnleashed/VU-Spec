@@ -75,18 +75,30 @@
                     }
 
                     .item-container {
+                        display: flex;
                         overflow: hidden;
+                        justify-content: space-between;
                         line-height: 1.4814vh;
                         font-size: 1.4814vh;
                         font-family: puristasemibold;
-                        img {
+
+                        .img-container {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                             max-width: 20%;
                             margin: 0.740vh 0;
+                            overflow: hidden;
+
+                            img {
+                                display: block;
+                                transform: scale(2);
+                            }
                         }
+                        
 
                         span {
                             margin: 0.740vh 0;
-                            float: right;
                         }
                     }
                 }
