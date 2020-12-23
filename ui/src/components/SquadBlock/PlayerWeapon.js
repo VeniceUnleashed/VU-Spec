@@ -28,7 +28,7 @@ export default class PlayerWeapon extends Component
         // TODO: Use frostbite asset.
         return (
             <div className="player-weapon">
-                <img src={'https://cdn.allianceapps.io/img/aa_logo.png'} />
+                <img src={weaponName} />
             </div>
         );
     }
