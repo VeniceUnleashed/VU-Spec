@@ -432,10 +432,10 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 
 		local s_AddObjectives = false
 
-	if s_Entity == nil then
-		-- if we don't find any CapturePointEntity in the beginning we clear our objectives
-		self:SendUIAction(CLEAR_OBJECTIVES, {})
-	end
+		if s_Entity == nil then
+			-- if we don't find any CapturePointEntity in the beginning we clear our objectives
+			self:SendUIAction(CLEAR_OBJECTIVES, {})
+		end
 	
         while s_Entity ~= nil do
             local s_CaptureEntity = CapturePointEntity(s_Entity)
@@ -449,7 +449,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
                 if not s_CaptureEntity.controlled then
                     s_Team = TeamId.TeamNeutral
                 end
-
+				
                 local s_Label = s_CaptureEntity.name
                 s_Label = s_Label:gsub('ID_H_US_', '')
                 s_Label = s_Label:gsub('ID_H_RU_', '')
@@ -484,7 +484,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
                 local s_Transform = s_CaptureEntity.transform.trans
 
                 if self.m_Objectives[s_ObjectiveIndex] == nil then
-               
+					
 					s_AddObjectives = true
 					
                 elseif self.m_Objectives[s_ObjectiveIndex]['label'] ~= s_Label or
@@ -516,6 +516,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 		
 		-- Add the Objectives here so the order is correct
 		if s_AddObjectives == true then
+			
 			self:SendUIAction(CLEAR_OBJECTIVES, {})
 			for s_ObjectiveIndex,m_Objective in pairs(self.m_Objectives) do
 			
@@ -536,10 +537,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
     -- Refresh all objectives if there are now less.
     if s_ObjectiveCounter > 1 and self.m_Objectives[s_ObjectiveCounter] ~= nil then
         self:SendUIAction(CLEAR_OBJECTIVES, {})
-
-        for i = 1, s_ObjectiveCounter - 1 do
-            self:SendUIAction(ADD_OBJECTIVE, { objective = self.m_Objectives[i] })
-        end
+		self.m_Objectives = {}
     end
 
 
