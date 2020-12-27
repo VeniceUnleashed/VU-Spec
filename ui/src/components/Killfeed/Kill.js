@@ -17,6 +17,9 @@ export default class Kill extends Component
         let weaponParts = weapon.split('/');
         let weaponName = weaponParts[weaponParts.length - 1];
 
+        // return a dummy div (probably null should work too)
+        if (!killed || !killerName) return (<div></div>)
+
         return (
             <div className="kill">
                 <span className={killerClass}>{killerName}</span>
