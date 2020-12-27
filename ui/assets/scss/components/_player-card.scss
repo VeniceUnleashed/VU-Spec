@@ -114,7 +114,10 @@
     }
 
     .score-container {
-        height: 0;
+        height: 4vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 64.81vh;
         margin: 0.370vh auto 0;
         text-align: center;
@@ -125,22 +128,21 @@
         transition: height 250ms ease-in-out, border-bottom-width 250ms ease-in-out;
 
         .score-item {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0.5555vh 1.3888vh 0.6767vh;
+            display: flex;
+            align-items: center;
+            margin: 0 1.4vh;
             color: #e6e6e6;
 
-            h1 {
-                display: inline-block;
-                vertical-align: bottom;
-                font-size: 1.1111vh;
-                margin-right: 0.9259vh;
+            div.label {
+                display: block;
+                font-size: 1.1vh;
+                margin-right: 0.9vh;
                 text-transform: uppercase;
             }
 
-            span {
-                vertical-align: bottom;
-                font-size: 1.48148vh;
+            div.value {
+                display: block;
+                font-size: 1.4vh;
             }
         }
     }
