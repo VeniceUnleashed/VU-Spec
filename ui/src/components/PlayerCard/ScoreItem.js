@@ -15,8 +15,8 @@ export default class ScoreItem extends Component
 
         return (
             <div className="score-item">
-                <h1>{label}</h1>
-                <span>{value}</span>
+                <div className="label">{label}</div >
+                <div className="value">{value}</div>
             </div>
         );
     }
