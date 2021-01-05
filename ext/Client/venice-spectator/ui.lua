@@ -314,12 +314,14 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
         self.m_InitialTimer = self.m_InitialTimer - p_Delta
         return
     end
-
-    for i = 1, self.m_KillCount do
-        if self.m_Kills[i]['delta'] ~= nil then
-            self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
-        end
-    end
+	
+	if self.m_KillCount ~= 0 then
+		for i = 1, self.m_KillCount do
+			if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil then
+				self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
+			end
+		end
+	end
 
     if not self.m_PlayerStats then
         self.m_PlayerStats = true
@@ -656,6 +658,10 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 end
 
 function SpectatorUI:ShouldUpdatePlayer(p_OldData, p_NewData)
+	if p_OldData == nil then
+		return true
+	end
+
     if p_OldData['team'] ~= p_NewData['team'] then
         return true
     end
