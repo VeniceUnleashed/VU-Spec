@@ -315,11 +315,9 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
         return
     end
 	
-	if self.m_KillCount ~= 0 then
-		for i = 1, self.m_KillCount do
-			if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil then
-				self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
-			end
+	for i = 1, self.m_KillCount do
+		if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil then
+			self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
 		end
 	end
 
@@ -600,7 +598,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
     local s_NewKillCount = 0
 
     for i = 1, s_KillCount do
-        if self.m_Kills[i]['delta'] <= 0 then
+        if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil and self.m_Kills[i]['delta'] <= 0 then
             self.m_Kills[i] = nil
             s_UpdateKills = true
         else
