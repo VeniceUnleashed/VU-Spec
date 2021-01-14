@@ -15,8 +15,8 @@ export default class ObjectiveBar extends Component
 
         for (let i = 0; i < objectives.length; ++i)
         {
-            let objective = this.props.objective || {};
-            let nextObjective = nextProps.objective || {};
+            let objective = objectives[i] || {};
+            let nextObjective = nextObjectives[i] || {};
 
             if (objective.currentTeam !== nextObjective.currentTeam ||
                 objective.contested !== nextObjective.contested ||

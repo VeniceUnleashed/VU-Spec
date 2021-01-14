@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
+import Utils from '../../util/Utils'
+
 export default class StatItem extends Component
 {
     shouldComponentUpdate(nextProps)
@@ -23,7 +25,9 @@ export default class StatItem extends Component
             <div className="stat-item">
                 <h1>{label}</h1>
                 <div className="item-container">
-                    <img src={require('../../../assets/img/' + label.toLowerCase() +'.png')}/>
+                    <div className="img-container">
+                      <img src={Utils.getWeaponName(label.toLowerCase())}/>
+                    </div>
                     <span>{leftLabel + ' / ' + rightLabel}</span>
                 </div>
             </div>

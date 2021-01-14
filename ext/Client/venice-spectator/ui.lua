@@ -314,12 +314,12 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
         self.m_InitialTimer = self.m_InitialTimer - p_Delta
         return
     end
-
-    for i = 1, self.m_KillCount do
-        if self.m_Kills[i]['delta'] ~= nil then
-            self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
-        end
-    end
+	
+	for i = 1, self.m_KillCount do
+		if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil then
+			self.m_Kills[i]['delta'] = self.m_Kills[i]['delta'] - p_Delta
+		end
+	end
 
     if not self.m_PlayerStats then
         self.m_PlayerStats = true
@@ -342,26 +342,76 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
     end
 
     local s_ObjectiveIndex = 1
+    local s_ObjectiveCounter = 1
+    
+    local gameMode = SharedUtils:GetCurrentGameMode()
+    if gameMode == nil then
+		-- while maploading this can be nil
+		return
+	elseif gameMode:match("Conquest") or gameMode:match("Superiority") or gameMode == "Domination0" or gameMode == "Scavenger0" then
+        
+        local s_TicketIterator = EntityManager:GetIterator('ClientTicketCounterEntity')
 
-    local s_TicketIterator = EntityManager:GetIterator('TicketCounterEntity')
+        local s_NeedsTeamUpdate = false
+        
+        if s_TicketIterator ~= nil then
+            local s_Entity = s_TicketIterator:Next()
 
-    local s_NeedsTeamUpdate = false
+            while s_Entity ~= nil do
+                local s_TicketCounter = TicketCounterEntity(s_Entity)
 
-    if s_TicketIterator ~= nil then
-        local s_Entity = s_TicketIterator:Next()
+                if self.m_Tickets[s_TicketCounter.team] ~= s_TicketCounter.ticketCount then
+                    self.m_Tickets[s_TicketCounter.team] = s_TicketCounter.ticketCount
+                    s_NeedsTeamUpdate = true
+                end
 
-        while s_Entity ~= nil do
-            local s_TicketCounter = TicketCounterEntity(s_Entity)
-
-            if self.m_Tickets[s_TicketCounter.team] ~= s_TicketCounter.ticketCount then
-                self.m_Tickets[s_TicketCounter.team] = s_TicketCounter.ticketCount
-                s_NeedsTeamUpdate = true
+                s_Entity = s_TicketIterator:Next()
             end
-
-            s_Entity = s_TicketIterator:Next()
         end
-    end
+        
+    elseif gameMode:match("Rush") then
+        
+        local s_TicketIterator = EntityManager:GetIterator('ClientLifeCounterEntity')
 
+        local s_NeedsTeamUpdate = false
+        
+        if s_TicketIterator ~= nil then
+            local s_Entity = s_TicketIterator:Next()
+
+            while s_Entity ~= nil do
+                local s_TicketCounter = LifeCounterEntity(s_Entity)
+
+                if self.m_Tickets[LifeCounterEntityData(s_TicketCounter.data).teamId] ~= s_TicketCounter.lifeCounter then
+                    self.m_Tickets[LifeCounterEntityData(s_TicketCounter.data).teamId] = s_TicketCounter.lifeCounter
+                    s_NeedsTeamUpdate = true
+                end
+
+                s_Entity = s_TicketIterator:Next()
+            end
+        end
+        
+    elseif gameMode:match("TeamDeathMatch") or gameMode == "SquadDeathMatch0" then
+    
+        local s_TicketIterator = EntityManager:GetIterator('ClientKillCounterEntity')
+
+        local s_NeedsTeamUpdate = false
+        
+        if s_TicketIterator ~= nil then
+            local s_Entity = s_TicketIterator:Next()
+
+            while s_Entity ~= nil do
+                local s_TicketCounter = KillCounterEntity(s_Entity)
+
+                if self.m_Tickets[KillCounterEntityData(s_TicketCounter.data).teamId] ~= s_TicketCounter.killCount then
+                    self.m_Tickets[KillCounterEntityData(s_TicketCounter.data).teamId] = s_TicketCounter.killCount
+                    s_NeedsTeamUpdate = true
+                end
+
+                s_Entity = s_TicketIterator:Next()
+            end
+        end
+        
+    end
     if s_NeedsTeamUpdate then
         local s_Teams = {}
 
@@ -375,11 +425,18 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
         self:SendUIAction(SET_TEAM_NAME, { team = 2, name = self.m_TeamNames[2] })
     end
 
-    local s_Iterator = EntityManager:GetIterator('CapturePointEntity')
-
-    if s_Iterator ~= nil then
+    local s_Iterator = EntityManager:GetIterator('ClientCapturePointEntity')
+   
+	if s_Iterator ~= nil then
         local s_Entity = s_Iterator:Next()
 
+		local s_AddObjectives = false
+
+		if s_Entity == nil then
+			-- if we don't find any CapturePointEntity in the beginning we clear our objectives
+			self:SendUIAction(CLEAR_OBJECTIVES, {})
+		end
+	
         while s_Entity ~= nil do
             local s_CaptureEntity = CapturePointEntity(s_Entity)
 
@@ -392,23 +449,44 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
                 if not s_CaptureEntity.controlled then
                     s_Team = TeamId.TeamNeutral
                 end
-
+				
                 local s_Label = s_CaptureEntity.name
                 s_Label = s_Label:gsub('ID_H_US_', '')
                 s_Label = s_Label:gsub('ID_H_RU_', '')
-
+				
+				-- Order the CapturePoints alphabetic
+				if s_Label == "A" then
+					s_ObjectiveIndex = 1
+				elseif s_Label == "B" then
+					s_ObjectiveIndex = 2
+				elseif s_Label == "C" then
+					s_ObjectiveIndex = 3
+				elseif s_Label == "D" then
+					s_ObjectiveIndex = 4
+				elseif s_Label == "E" then
+					s_ObjectiveIndex = 5
+				elseif s_Label == "F" then
+					s_ObjectiveIndex = 6
+				elseif s_Label == "G" then
+					s_ObjectiveIndex = 7
+				elseif s_Label == "H" then
+					s_ObjectiveIndex = 8
+				elseif s_Label == "I" then
+					s_ObjectiveIndex = 9
+				elseif s_Label == "J" then
+					s_ObjectiveIndex = 10
+				elseif s_Label == "K" then
+					s_ObjectiveIndex = 11
+				elseif s_Label == "L" then
+					s_ObjectiveIndex = 12
+				end
+				
                 local s_Transform = s_CaptureEntity.transform.trans
 
                 if self.m_Objectives[s_ObjectiveIndex] == nil then
-                    self:SendUIAction(ADD_OBJECTIVE, {
-                        objective = {
-                            label = s_Label,
-                            currentTeam = s_Team,
-                            contested = s_Contested,
-                            position = { s_Transform.x, s_Transform.y, s_Transform.z }
-                        }
-                    })
-
+					
+					s_AddObjectives = true
+					
                 elseif self.m_Objectives[s_ObjectiveIndex]['label'] ~= s_Label or
                         self.m_Objectives[s_ObjectiveIndex]['currentTeam'] ~= s_Team or
                         self.m_Objectives[s_ObjectiveIndex]['contested'] ~= s_Contested then
@@ -430,20 +508,36 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
                     position = { s_Transform.x, s_Transform.y, s_Transform.z }
                 }
 
-                s_ObjectiveIndex = s_ObjectiveIndex + 1
+                s_ObjectiveCounter = s_ObjectiveCounter + 1
             end
 
             s_Entity = s_Iterator:Next()
         end
+		
+		-- Add the Objectives here so the order is correct
+		if s_AddObjectives == true then
+			
+			self:SendUIAction(CLEAR_OBJECTIVES, {})
+			for s_ObjectiveIndex,m_Objective in pairs(self.m_Objectives) do
+			
+				self:SendUIAction(ADD_OBJECTIVE, {
+					objective = {
+						label = m_Objective.label,
+						currentTeam = m_Objective.currentTeam,
+						contested = m_Objective.contested,
+						position = m_Objective.position
+					}
+				})
+			end
+		end
+		s_AddObjectives = false
+		
     end
 
     -- Refresh all objectives if there are now less.
-    if s_ObjectiveIndex > 1 and self.m_Objectives[s_ObjectiveIndex] ~= nil then
+    if s_ObjectiveCounter > 1 and self.m_Objectives[s_ObjectiveCounter] ~= nil then
         self:SendUIAction(CLEAR_OBJECTIVES, {})
-
-        for i = 1, s_ObjectiveIndex - 1 do
-            self:SendUIAction(ADD_OBJECTIVE, { objective = self.m_Objectives[i] })
-        end
+		self.m_Objectives = {}
     end
 
 
@@ -504,7 +598,7 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
     local s_NewKillCount = 0
 
     for i = 1, s_KillCount do
-        if self.m_Kills[i]['delta'] <= 0 then
+        if self.m_Kills[i] ~= nil and self.m_Kills[i]['delta'] ~= nil and self.m_Kills[i]['delta'] <= 0 then
             self.m_Kills[i] = nil
             s_UpdateKills = true
         else
@@ -562,6 +656,10 @@ function SpectatorUI:OnUpdate(p_Delta, p_SimulationDelta)
 end
 
 function SpectatorUI:ShouldUpdatePlayer(p_OldData, p_NewData)
+	if p_OldData == nil then
+		return true
+	end
+
     if p_OldData['team'] ~= p_NewData['team'] then
         return true
     end
@@ -694,19 +792,22 @@ function SpectatorUI:GetPlayerData(p_Player)
         local s_WeaponsComponent = s_Soldier.weaponsComponent
 
         if s_WeaponsComponent ~= nil then
-            s_PlayerData['currentWeapon'] = s_WeaponsComponent.currentWeaponIndex
+            s_PlayerData['currentWeapon'] = s_WeaponsComponent.currentWeaponSlot
 
-            for i = 1, s_WeaponsComponent.weaponCount do
+            for i,s_Weapon in pairs(s_WeaponsComponent.weapons) do
                 s_PlayerData['weapons'][i] = {}
-                local s_Weapon = s_WeaponsComponent:GetWeapon(i - 1)
-
+                
                 if s_Weapon ~= nil then
                     local s_SoldierWeaponData = SoldierWeaponData(s_Weapon.data)
-                    local s_SoldierWeaponBlueprint = SoldierWeaponBlueprint(s_SoldierWeaponData.soldierWeaponBlueprint)
-                    s_PlayerData['weapons'][i]['name'] = s_SoldierWeaponBlueprint.name or s_Weapon.name -- Old: GetWeaponEntityNameByIndex
-                    s_PlayerData['weapons'][i]['displayName'] = s_Weapon.name -- Old: GetWeaponNameByIndex
-                    s_PlayerData['weapons'][i]['ammo'] = s_Weapon.primaryAmmo
-                    s_PlayerData['weapons'][i]['ammoMags'] = s_Weapon.secondaryAmmo
+                    local s_SoldierWeaponBlueprint = s_SoldierWeaponData.soldierWeaponBlueprint
+                    if s_SoldierWeaponBlueprint ~= nil then
+                        s_SoldierWeaponBlueprint = SoldierWeaponBlueprint(s_SoldierWeaponBlueprint)
+                    end
+                        s_PlayerData['weapons'][i]['name'] = s_SoldierWeaponBlueprint.name or s_Weapon.name -- Old: GetWeaponEntityNameByIndex
+                        s_PlayerData['weapons'][i]['displayName'] = s_Weapon.name -- Old: GetWeaponNameByIndex
+                        s_PlayerData['weapons'][i]['ammo'] = s_Weapon.primaryAmmo
+                        s_PlayerData['weapons'][i]['ammoMags'] = s_Weapon.secondaryAmmo
+                    
                 end
             end
 

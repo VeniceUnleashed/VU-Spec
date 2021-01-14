@@ -53,10 +53,13 @@ export default class EquipmentItem extends Component
                 displayName = 'Slot ' + slot;
         }
 
-        let weaponImage = require('../../../assets/img/no-equipment.png');
+        let weaponImage = 'fb://UI/Art/Persistence/WeaponAccessory/NoSelection';
 
-        if (!this.state.error && weaponName !== null)
-            weaponImage = require('../../../assets/img/weapons/' + weaponName + '.png');
+
+        if (!this.state.error && weaponName !== null) {
+            weaponImage = Utils.getWeaponName(weaponName);
+        }
+
 
         // TODO: Use frostbite asset.
         return (
@@ -77,7 +80,7 @@ export default class EquipmentItem extends Component
         return (
             <div className={className}>
                 <h1>Slot {weaponSlot + 1}</h1>
-                <img src={require('../../../assets/img/no-equipment.png')}/>
+                <img src={weaponImage}/>
             </div>
         )
     }

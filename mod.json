@@ -3,7 +3,10 @@
 	"Authors": [ "Venice Unleashed" ],
 	"Description": "Venice Unleashed Spectator Functionality",
 	"URL": "http://veniceunleashed.net",
-	"Version": "1.1",
+	"Version": "1.2.1",
 	"HasWebUI": true,
-	"HasVeniceEXT": true
+	"HasVeniceEXT": true ,
+	"Dependencies": {
+       		"veniceext": "^1.0.3"
+ 	}
 }
